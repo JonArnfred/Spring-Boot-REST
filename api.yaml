@@ -1,0 +1,53 @@
+openapi: 3.0.0
+info:
+  version: '1.0.0'
+  title: 'Organisation information'
+  description: 'Fetch organisation information from different databases'
+  #termsOfService: terms url goes here
+  contact:
+    name: developer name
+    #email: email goes here
+    #url: url goes here
+  license:
+    name: Apache 2.0
+
+servers:
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/jon_test/organisation_api/1.0.0
+  - description: 'localhost'
+    url: http://localhost:8083
+
+paths:
+  /organisation/{organisation_name}/{member_name}:
+    get:
+      description: 'Obtain information about members of an organisation'
+      parameters:
+      - name: organisation_name
+        in: path
+        description: 'Name of the organisation'
+        required: true
+        schema:
+          type: string
+          example: Maersk
+      - name: member_name
+        in: path
+        description: 'Name of the member to fetch'
+        required: true
+        schema:
+          type: string
+          example: Pete
+      responses:
+        '200':
+          description: successful fetch of member
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 4
+                  name:
+                    type: string
+                    example: 'pete'

@@ -1,0 +1,9 @@
+Import the cypher file in neo4J to get started
+
+
+
+neo4j-shell -c <  database.cql
+
+or:
+
+cat query.cql | cypher-shell

@@ -1,0 +1,21 @@
+There is one object, the DataAccessManager that owns the database connections and connection pools.
+
+Specific access classes can use the DataAccessManager through inheriting the instance created in DomainAccess.
+
+Each Access class returns a database specific object, such as a ResultSet to a service layer.
+
+So this is the hierarachy:
+
+
+
+
+
+
+
+DataAccessManager (
+    |
+    |
+Database connection
+    |
+    |
+DataSource (depending on the database)

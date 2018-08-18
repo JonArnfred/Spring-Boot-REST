@@ -1,0 +1,134 @@
+:toc: macro
+
+:toc-title:
+
+:toclevels: 99
+
+toc::[]
+
+[TOC]
+# Spring Boot REST multiple data sources
+
+This project is a Spring Boot REST app that connects to the following data sources:
+- Flat file
+- PostgresSQL
+- Neo4J
+- mongoDB
+
+There is also a computation endpoint and a set of documentation endpoints.
+
+I've used it to learn about Spring and plan to use it as a starting point for future REST services.
+
+## Getting started
+
+### Prerequisites
+The Gradle Build Tool installed, https://gradle.org/install/, version 4.7+
+Java 8+.
+
+### Building the application and running the tests
+Cd into the project root folder.
+To build and run tests
+``gradle build``
+
+To build and run the application
+``gradle bootRun``
+
+The bootRun task is provided by the org.springframework.boot plugin.
+
+To see a list of tasks
+``gradle tasks``
+
+The tests are divided into unit tests and integration tests. Integration tests run the
+Spring Boot configuration and tests the API and data access layer on the actual database
+as defined in the application properties. The unit tests run on in memory databases, which only
+exist during the test phase.
+
+Integration tests of the access layer assume that all tests are run on a clean database.
+There is no attempt to revoke changes made to the database as part of running
+these tests.
+
+The application runs on port 8083, the port is set in server.port of application.properties.
+
+### Code style
+There is a code scheme named code-scheme.xml in the project root folder.
+
+## Application architecture
+The application is divided into the following layers:
+
+- API
+- Service
+- Access
+
+If we make use of an object mapper, which is the case with Neo4J (neo4j-ogm) and mongo (included in mongo)
+then there is no translation layer between the service layer and the database. With PostgresSQL we have
+an access layer that translates between sql specific objects and application specific domain objects.
+
+
+## API Documentation
+Swagger UI can be accessed at /swagger-ui.html
+Swagger resource info at /swagger-resources
+OpenAPI 2.0 definition at /v2/api-docs
+Redoc documentation at /documentation/index.html
+
+## Built with
+- Spring Boot
+- Spring Boot Actuator
+- Gradle
+- Springfox-swagger2
+- Gson
+- Junit 4
+- REST Assured
+- MongoDB
+- Fakemongo
+- HikariCP
+- PostgresSQL
+- Neo4J
+- Neo4J OGM
+- Neo4j Harness
+- Redoc
+
+## Properties
+### Application properties
+Spring Boot by default adds application.properties in resource folder to the class path. Spring boot also
+adds application properties with properties found in application-{spring.profiles.active}.properties, giving preference
+to application-{spring.profiles.active}.properties over application.properties.
+
+To utilize this behaviour one can place default properties in application.properties, and environment specific
+properties in application-{spring.profiles.active}.properties. In this project, the default spring profile is dev.
+
+
+### Configuration properties
+The @ConfigurationProperties(prefix = 'xyz') allows configuration to be loaded into regular POJOS.
+Spring Boot uses relaxed rules for binding, so the my_foo property matches the myFoo instance variable.
+See https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html
+for details.
+
+## Deployment
+For deploying the application, either edit the spring.profiles.active, or pass a JVM argument on startup: `` java -jar -Dspring.profiles.active=prod app.jar ``
+
+
+## Production metrics
+The application comes with the spring-boot-starter-actuator. The default endpoint base path is specified by
+management.endpoints.web.base-path in application.properties.
+Endpoints /ping, /health and /info are open to the public, this can be configured in application-{profile}.properties.
+
+Further reading:
+https://docs.spring.io/spring-boot/docs/2.0.0.RELEASE/actuator-api//pdf/spring-boot-actuator-web-api.pdf
+
+
+## REST naming conventions
+
+- Path parameters in crud functionality, but query parameters in search
+- Resources in plural
+- Most specific thing last
+- Same url for PUT, POST, GET, DELETE, UPDATE.
+- Separate words by -, not _
+
+To get y of type Y from b of type B<br>
+/Bs/b/Ys/y<br>
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details
+
+## TODOs
+- Expose graphql endpoints for neo4J backend, see https://github.com/neo4j-graphql/neo4j-graphql

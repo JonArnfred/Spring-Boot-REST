@@ -1,0 +1,2 @@
+use the mongo command in shell to reset the database
+mongo < /path/to/database.js

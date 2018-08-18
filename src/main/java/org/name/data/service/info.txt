@@ -1,0 +1,14 @@
+
+
+When we use an object mapper, we can have a generic abstract service class, such as DocumentService which allows for
+easy implementation of generic functionality, such as crud. In that case we will use an abstract class with abstract methods
+which can extend the generic functionality as a domain specific contract. Only by doing so can we avoid implementing methods in
+each concrete class, and write to an interface.
+
+In the case where we do not have an object mapper in the service layer, we provide a concrete implementation of the Service<T>
+interface in each concrete class.
+
+In both cases, all methods in the service implementations should either be overridden
+methods or extended from a generic super class.
+
+

@@ -1,0 +1,1 @@
+in psql run \i /path/to/reset_db.sql to reset the database.
