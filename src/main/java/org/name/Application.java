@@ -4,7 +4,9 @@ import org.name.interceptors.LogInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -15,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableAutoConfiguration
 @EnableConfigurationProperties
 @ComponentScan("org.name")
-public class Application implements WebMvcConfigurer {
+public class Application extends SpringBootServletInitializer implements WebMvcConfigurer {
 
   @Autowired private LogInterceptor logInterceptor;
 
@@ -24,6 +26,11 @@ public class Application implements WebMvcConfigurer {
     SpringApplication springApplication = new SpringApplication(Application.class);
 
     springApplication.run(args);
+  }
+
+  @Override
+  protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
+    return builder.sources(Application.class);
   }
 
   @Override
