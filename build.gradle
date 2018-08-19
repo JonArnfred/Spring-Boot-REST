@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'war'
     id "io.spring.dependency-management" version "1.0.4.RELEASE"
     id 'org.springframework.boot' version '2.0.0.RELEASE'
 }
@@ -9,6 +10,13 @@ plugins {
 //* collects all the jars on the classpath and builds a single, runnable "über-jar"
 //* searches for the public static void main() method to flag as a runnable class.
 //*provides a built-in dependency resolver that sets the version number to match Spring Boot dependencies.
+
+jar {
+    enabled = true
+}
+war {
+    enabled = true
+}
 
 group 'my_org'
 version '1.0-SNAPSHOT'
@@ -98,6 +106,9 @@ dependencies {
 
     // ****** REST Assurred
     testCompile group: 'io.rest-assured', name: 'rest-assured', version: "${restAssuredVersion}"
+
+    // we don't want the embedded tomcat to
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
 
 }

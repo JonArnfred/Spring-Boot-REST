@@ -28,15 +28,19 @@ I've used it to learn about Spring and plan to use it as a starting point for fu
 
 ### Building the application and running the tests
 Cd into the project root folder.
-To build and run tests
+To build and run tests +
 ``gradle build``
 
-To build and run the application
+To build a Jar file +
+``gradle bootJar``
+
+To build a war file +
+``gradle bootWar``
+
+To build and run the application +
 ``gradle bootRun``
 
-The bootRun task is provided by the org.springframework.boot plugin.
-
-To see a list of tasks
+To see a list of tasks +
 ``gradle tasks``
 
 The tests are divided into unit tests and integration tests. Integration tests run the
@@ -48,7 +52,8 @@ Integration tests of the access layer assume that all tests are run on a clean d
 There is no attempt to revoke changes made to the database as part of running
 these tests.
 
-The application runs on port 8083, the port is set in server.port of application.properties.
+In an embedded servlet container, the application runs on port 8083 which is specified in server.port of application.properties.
+In deployment the application will run on whatever port that the servlet container is running on.
 
 ### Code style
 There is a code scheme named code-scheme.xml in the project root folder.
