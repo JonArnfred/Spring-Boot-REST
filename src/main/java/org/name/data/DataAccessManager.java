@@ -98,6 +98,7 @@ public class DataAccessManager {
         .append(relationalProperties.getSchema());
 
     cpConfig.setJdbcUrl(connectionUrl.toString());
+    cpConfig.setDriverClassName(relationalProperties.getDriverClass());
     cpConfig.setUsername(relationalProperties.getUser());
     cpConfig.setPassword(relationalProperties.getPassword());
 

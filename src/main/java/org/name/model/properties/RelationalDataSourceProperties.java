@@ -15,6 +15,7 @@ public class RelationalDataSourceProperties {
   private String schema;
   private String user;
   private String password;
+  private String driverClass;
 
   public String getProtocol() {
     return protocol;
@@ -78,5 +79,13 @@ public class RelationalDataSourceProperties {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public String getDriverClass() {
+    return driverClass;
+  }
+
+  public void setDriverClass(String driverClass) {
+    this.driverClass = driverClass;
   }
 }
