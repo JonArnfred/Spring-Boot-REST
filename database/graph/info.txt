@@ -6,4 +6,4 @@ neo4j-shell -c <  database.cql
 
 or:
 
-cat query.cql | cypher-shell
+cat database.cql | cypher-shell -u my_username p my_password
