@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'war'
     id "io.spring.dependency-management" version "1.0.4.RELEASE"
-    id 'org.springframework.boot' version '2.0.0.RELEASE'
+    id 'org.springframework.boot' version '2.0.4.RELEASE'
 }
 
 
@@ -29,16 +29,24 @@ repositories {
 }
 
 task all(type: GradleBuild) {
-    tasks = ['clean', 'build', 'buildProperties']
+    tasks = ['clean', 'build', 'allProperties']
 }
 
 
-task buildProperties(type: WriteProperties) {
+task allProperties(type: WriteProperties) {
+    // output build properties 
     def propertyFile = file "src/main/resources/build.properties"
     def props = new Properties()
     props.setProperty("version", project.version)
     properties props
     outputFile propertyFile
+    
+    // load application properties to access during build
+    file("src/main/resources/application.properties").withReader {
+        Properties appProps = new Properties()
+        appProps.load(it)
+        project.ext.props = appProps
+    }
 }
 
 def fakeMongoDBVersion = '2.2.0-RC2'
@@ -107,8 +115,9 @@ dependencies {
     // ****** REST Assurred
     testCompile group: 'io.rest-assured', name: 'rest-assured', version: "${restAssuredVersion}"
 
-    // we don't want the embedded tomcat to
+    if(project.ext.props["spring.profiles.active"] != "dev"){
+    // if we're not in dev mode, we don't want the embedded container
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-
-
+    
+    }
 }
